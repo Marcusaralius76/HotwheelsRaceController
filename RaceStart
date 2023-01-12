@@ -1,0 +1,46 @@
+#include <Servo.h>
+
+Servo servo;
+
+const byte redLight = 3;
+const byte yellowLight = 9;
+const byte greenLight = 10;
+const byte servoPin = 11;
+
+const float redLightVoltage = 0.5;
+const float yellowLightVoltage = 5;
+const float greenLightVoltage = 5;
+
+void setup()
+{
+  servo.attach(servoPin);
+  servo.write(0);
+}
+
+void loop()
+{
+  analogWrite(redLight, VoltConvert(redLightVoltage));
+  analogWrite(yellowLight, 0);
+  analogWrite(greenLight, 0);
+  
+  delay(3000);
+  
+  analogWrite(redLight, 0);
+  analogWrite(yellowLight, VoltConvert(yellowLightVoltage));
+  
+  delay(3000);
+  
+  servo.write(30);
+  analogWrite(yellowLight, 0);
+  analogWrite(greenLight, VoltConvert(greenLightVoltage));
+  
+  delay(1000);
+  
+  servo.write(0);
+}
+
+//converts voltage to analog output value
+int VoltConvert(float voltage)
+{
+  return voltage * 51.0;
+}
